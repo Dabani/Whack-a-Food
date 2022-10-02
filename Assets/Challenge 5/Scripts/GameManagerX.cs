@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class GameManagerX : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI timeText;
     public TextMeshProUGUI gameOverText;
     public GameObject titleScreen;
     public Button restartButton; 
@@ -16,6 +17,7 @@ public class GameManagerX : MonoBehaviour
 
     private int score;
     private float spawnRate = 1.5f;
+    private float timeLeft = 60.0f; // Set the maximum time to play (in seconds)
     public bool isGameActive;
 
     private float spaceBetweenSquares = 2.5f; 
@@ -32,6 +34,15 @@ public class GameManagerX : MonoBehaviour
         score = 0;
         UpdateScore(0);
         titleScreen.SetActive(false);
+    }
+    
+    private void Update() {
+        // Run the timer if the game is active
+        if (isGameActive)
+            if (timeLeft > 0)
+                UpdateTimer();
+            else
+                GameOver();
     }
 
     // While game is active spawn a random target
@@ -73,6 +84,13 @@ public class GameManagerX : MonoBehaviour
         score += scoreToAdd;
         // Add the score value to the score text by concatenation.
         scoreText.text = "Score: " + score;
+    }
+
+    // Countdown the timer and update the time left on the screen
+    void UpdateTimer()
+    {
+        timeLeft -= Time.deltaTime;
+        timeText.text = "Time: " + Mathf.RoundToInt(timeLeft);
     }
 
     // Stop game, bring up game over text and restart button
