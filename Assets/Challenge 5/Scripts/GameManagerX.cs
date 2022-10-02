@@ -70,6 +70,7 @@ public class GameManagerX : MonoBehaviour
     public void UpdateScore(int scoreToAdd)
     {
         score += scoreToAdd;
+        // Add the score value to the score text by concatenation.
         scoreText.text = "Score: " + score;
     }
 
@@ -77,6 +78,7 @@ public class GameManagerX : MonoBehaviour
     public void GameOver()
     {
         gameOverText.gameObject.SetActive(true);
+        // Set SetActive to true to activate the Restart button
         restartButton.gameObject.SetActive(true);
         isGameActive = false;
     }
